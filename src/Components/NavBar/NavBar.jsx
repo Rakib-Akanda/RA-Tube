@@ -62,11 +62,23 @@ const NavBar = () => {
             </div>
           </div>
           <Link to={"/profile"} className="lg:px-6">
-            <div className="avatar">
-              <div className="w-12 h-12 rounded-full">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            {user ? (
+              <div className="avatar">
+                <div className="w-12 h-12 rounded-full">
+                  <img
+                    src={
+                      user && user.photoURL
+                        ? user.photoURL
+                        : "https://source.unsplash.com/150x150/?portrait?3"
+                    }
+                    alt=""
+                    className="w-32 h-32 mx-auto rounded-full bg-gray-500 aspect-square"
+                  />
+                </div>
               </div>
-            </div>
+            ) : (
+              <h1>Login</h1>
+            )}
           </Link>
         </div>
       </div>

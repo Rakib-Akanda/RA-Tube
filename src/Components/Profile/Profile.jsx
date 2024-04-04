@@ -3,12 +3,12 @@ import { AuthContext } from "../AuthProviders/AuthProviders";
 import { HiMiniCheckBadge } from "react-icons/hi2";
 const Profile = () => {
   const { user } = useContext(AuthContext);
-	console.log(user);
+  console.log(user);
   return (
-    <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 bg-gray-50 text-gray-800">
+    <div className="flex flex-col justify-center mt-10 w-2/3 mx-auto p-6 shadow-md rounded-xl sm:px-12 bg-gray-50 text-gray-800">
       <img
         src={
-          user.photoURL
+          user && user.photoURL
             ? user.photoURL
             : "https://source.unsplash.com/150x150/?portrait?3"
         }
@@ -25,6 +25,7 @@ const Profile = () => {
               ""
             )}
           </h2>
+          <p>Your email: {user?.email && user.email}</p>
           <p className="px-5 text-xs sm:text-base text-gray-600">
             Full-stack developer
           </p>

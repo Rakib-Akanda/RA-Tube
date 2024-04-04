@@ -2,9 +2,14 @@ import { useContext, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../Components/AuthProviders/AuthProviders";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, googleSignIn, githubSignIn, facebookSignIn } =
+    useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [loginSuccess, setLoginSuccess] = useState("");
@@ -29,8 +34,23 @@ const Login = () => {
       })
       .catch((error) => {
         setLoggedIn(false);
-        setLoginError(error.message);
+        setLoginError(error.message.split("auth/")[1]);
       });
+  };
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+      .then(() => setLoggedIn(true))
+      .catch((error) => setLoginError(error.message));
+  };
+  const handleFacebookSignIn = () => {
+    facebookSignIn()
+      .then(() => setLoggedIn(true))
+      .catch((error) => setLoginError(error.message));
+  };
+  const handleGithubLogin = () => {
+    githubSignIn()
+      .then(() => setLoggedIn(true))
+      .catch((error) => setLoginError(error.message));
   };
   if (loggedIn) {
     return <Navigate to={"/"}></Navigate>;
@@ -96,6 +116,24 @@ const Login = () => {
               {loginSuccess && (
                 <p className="text-green-600 mt-2">{loginSuccess}</p>
               )}
+            </div>
+            <div className="mt-5">
+              <p className="text-center font-semibold">Login with</p>
+              <div className="flex justify-center mt-3">
+                <FcGoogle
+                  onClick={handleGoogleSignIn}
+                  className="text-3xl mr-2"
+                />
+                <FaGithub
+                  onClick={handleGithubLogin}
+                  className="text-3xl mr-2"
+                />
+                <FaFacebook
+                  onClick={handleFacebookSignIn}
+                  className="text-3xl mr-2 text-blue-600"
+                />
+                <FaXTwitter className="text-3xl mr-2" />
+              </div>
             </div>
           </form>
         </div>
